@@ -1,0 +1,52 @@
+services:
+  mydb:
+    image: mariadb
+    container_name: mydb
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+      MARIADB_DATABASE: "pokemon"
+    volumes: 
+      - data:/data/db
+    networks:
+      - back
+  pokemonapi:
+    container_name: pokemonapi
+    build:
+      context: ./API_POKEMON
+    depends_on:
+      - mydb
+    volumes:
+      - ./API_POKEMON:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - back
+      - front
+  pokemonreact:
+    container_name: pokemonreact
+    build:
+      context: ./react-pokemons-app
+    volumes:
+      - ./react-pokemons-app:/app
+      - /app/node_modules
+    ports:
+      - "3001:3000"
+    networks:
+      - front
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mydb
+      MARIADB_ROOT_PASSWORD: ""
+    ports:
+      - "8080:80"
+    networks:
+      - back
+      - front
+volumes:
+  data:
+networks:
+  back:
+  front:
