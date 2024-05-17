@@ -7,6 +7,8 @@ services:
       MARIADB_DATABASE: "pokemon"
     volumes: 
       - data:/data/db
+    ports:
+      - "3306:3306"
     networks:
       - back
   pokemonapi:
@@ -37,9 +39,6 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
-    environment:
-      PMA_HOST: mydb
-      MARIADB_ROOT_PASSWORD: ""
     ports:
       - "8080:80"
     networks:

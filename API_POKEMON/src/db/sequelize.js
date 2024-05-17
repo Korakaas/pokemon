@@ -9,7 +9,7 @@ let sequelize
 if(process.env.NODE_ENV === 'production') {
   sequelize = new Sequelize('pokemon', 'root', '', {
     host: 'mydb',
-    port: '3307',
+    port: '3306',
     dialect: 'mariadb',
     dialectOptions: {
       timezone: 'Etc/GMT-2',
@@ -20,7 +20,7 @@ if(process.env.NODE_ENV === 'production') {
   sequelize = new Sequelize('pokemon', 'root', '', {
     host: 'mydb',
     dialect: 'mariadb',
-    port: '3307',
+    port: '3306',
     dialectOptions: {
       timezone: 'Etc/GMT-2',
     },
